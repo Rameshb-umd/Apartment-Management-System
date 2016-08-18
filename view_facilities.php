@@ -29,6 +29,11 @@ function getListofFacilities ($db,$apt_id){
                         <td>'.$row['facility_description'].'</td>
                     </tr>'; 
             }
+            if($count==0){
+                 echo '<tr class="detail '.$css.'">
+                        <td colspan=2>No Data found for this apartment.</td>
+                    </tr>'; 
+            }
         }
 }
 

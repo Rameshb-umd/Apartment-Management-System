@@ -1,12 +1,11 @@
-<?php # 
+<?php # add_movie.php
 
-$page_title = 'Edit Apartment';
+$page_title = 'Add Movie';
 include ('connect_to_sql.php');
 include ('menu.php');
 include ('validate.php');
 include ('common_functions.php');
 echo '<link rel="stylesheet" href="styles.css" type="text/css">';
-
 
 // Function to get Building Name and ID
 function getBuilding($db,$building_id){
@@ -40,16 +39,8 @@ function getAptType($db,$apt_type){
     echo '</select>';   
 }
 
-//Get Apartment Details
-function getApartmentDetails($db,$apt_id){
-    $query = "select apt_id,building_id,apt_type_code,apt_number,bathroom_count,bedroom_count,room_count from apartments where apt_id=$apt_id";
-    $result = @mysqli_query($db,$query); 
-    $row = mysqli_fetch_array($result, MYSQL_ASSOC);
-    return $row;
-}
-
 // Create the form.
-echo '<form action="edit_apartments.php" method="post">';
+echo '<form action="add_apartments.php" method="post">';
 $building_id = "";
 $apt_type= "";
 $apt_num= "";
@@ -57,20 +48,9 @@ $bed_count= "";
 $bath_count= "";
 $room_count= "";
 $apt_id = "";
-//Only if Apt id know we can edit the apartment
-if (isset($_GET['apt_id'])) {	
-    $apt_id = $_GET['apt_id'];
-    $apartment = getApartmentDetails($dbc,$apt_id);
-    $building_id = $apartment["building_id"];
-    $apt_type=$apartment["apt_type_code"];
-    $apt_num=$apartment["apt_number"];
-    $bed_count=$apartment["bedroom_count"];
-    $bath_count=$apartment["bathroom_count"];
-    $room_count=$apartment["room_count"];
-}
+
 //Populate Value from Form Submit - Stickeness
-if (isset($_POST['apt_id'])) {	
-    $apt_id = $_POST['apt_id'];
+if (isset($_POST['submitted'])) {	
     $building_id = $_POST["building_id"];
     $apt_type=$_POST["apt_type_code"];
     $apt_num=$_POST["apt_number"];
@@ -79,29 +59,29 @@ if (isset($_POST['apt_id'])) {
     $room_count=$_POST["room_count"];
 }
 
-echo '<div class="container">';
-echo '<h2>Edit Apartment -  Apartment Number:'.$apt_num.'</h2>' ;   
-echo '<p>Apartment Building: '; 
-getBuilding($dbc,$building_id);
-echo '</p>
-<p>Apartment Type: ';
-getAptType($dbc,$apt_type);
- echo '</p>
-<p>Apartment Number: <input type="text" name="apt_number" size="10" maxlength="10" value="'.$apt_num.'" /></p>
-<p>Bedroom Count: <input type="text" name="bedroom_count" size="10" maxlength="10" value="'.$bed_count.'" /></p>
-<p>Bathroom Count: <input type="text" name="bathroom_count" size="10" maxlength="10" value="'.$bath_count.'" /></p>
-<p>Total rooms: <input type="text" name="room_count" size="10" maxlength="10" value="'.$room_count.'" /></p>
+//Forms info
+ echo '<div class="container">';
+    echo '<h2>Add new Apartment </h2>' ;   
+    echo '<p>Apartment Building: '; 
+    getBuilding($dbc,$building_id);
+    echo '</p>
+    <p>Apartment Type: ';
+    getAptType($dbc,$apt_type);
+     echo '</p>
+    <p>Apartment Number: <input type="text" name="apt_number" size="10" maxlength="10" value="'.$apt_num.'" /></p>
+    <p>Bedroom Count: <input type="text" name="bedroom_count" size="10" maxlength="10" value="'.$bed_count.'" /></p>
+    <p>Bathroom Count: <input type="text" name="bathroom_count" size="10" maxlength="10" value="'.$bath_count.'" /></p>
+    <p>Total rooms: <input type="text" name="room_count" size="10" maxlength="10" value="'.$room_count.'" /></p>';
 
-<input type="hidden" name="submitted" value="TRUE" />
-<input type="hidden" name="apt_id" value="'. $apt_id.'" />
-<p><input type="submit" name="submit" value="Submit" /></p>
-</form>';
-echo '</div>'; 
+if(!isset($_POST['submitted'])){
+    
+     printFormSubmit();
+}
 
 //Validate and Submit to the Database
 if (isset($_POST['submitted'])) {
     
-    echo '<div class="Message_bar">';
+    
     $errors = array(); 
     checkIfEmpty($_POST['building_id'],"Please Select a building.",$errors);
     checkIfEmpty($_POST['apt_type_code'],"Please Select apartment type.",$errors);
@@ -114,18 +94,18 @@ if (isset($_POST['submitted'])) {
     checkIfNumeric($_POST['bedroom_count'],"Please input numeric value for bedroom count.",$errors);
     checkIfNumeric($_POST['room_count'],"Please input numeric value for total room count.",$errors);
 
+    if (!empty($errors)) { 
+         printFormSubmit();
+    }else{
+        echo '</form></div>';
+    }
+    echo '<div class="Message_bar">';
     //if no errors in the vlaues selected, updation of the entries
     if (empty($errors)) { // If everything's OK.
         // Make the query.
-        $query = "UPDATE apartments SET 
-        building_id='$building_id',
-        apt_type_code='$apt_type', 
-        apt_number='$apt_num', 
-        bathroom_count='$bath_count', 
-        bedroom_count='$bed_count', 
-        room_count='$room_count'
-        WHERE apt_id = $apt_id";
-        updateTable($dbc,$query);
+        $apt_id = getApartmentId($dbc)+1;
+        $query = "INSERT INTO Apartments VALUES ($apt_id,$building_id,$apt_type,'$apt_num','$bath_count','$bed_count','$room_count')";
+        addTable($dbc,$query);
     }else {  // Report the errors.
         echo '<div class="error"><p class="error">The following error(s) occurred:<br/><ul>';
 		foreach ($errors as $msg) { // Print each error.
@@ -135,5 +115,4 @@ if (isset($_POST['submitted'])) {
     }
     echo '</div>';
 }
-
 ?>

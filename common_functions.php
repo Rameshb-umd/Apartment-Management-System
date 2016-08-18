@@ -68,6 +68,19 @@ function updateTable($dbc,$query){
     }
 }
 
+//Add data in the table
+function addTable($dbc,$query){
+    $result = @mysqli_query ($dbc, $query); // Run the query.
+    if ((mysqli_affected_rows($dbc) == 1) || (mysqli_affected_rows($dbc) == 0)) { 
+        echo 'The record has been added.<br/>';								
+    } else { // If query did not run OK.
+        echo '<p class="error">The record could not be added due to a system error. We apologize for any inconvenience.</p>'; // Public message.
+        echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $query . '</p>'; // Debugging message.
+        exit();
+    }
+}
+
+
 //Delete record from the Table
 function deleteTable($dbc,$query){
     $result = @mysqli_query ($dbc, $query); // Run the query.
@@ -93,6 +106,19 @@ function checkApartmentBooked($dbc,$apt_id){
     }
 }
 
+function getApartmentId($dbc){
+    $query = "select max(apt_id) from apartments";
+    $result = @mysqli_query ($dbc, $query); // Run the query.
+    $row = mysqli_fetch_array($result, MYSQL_NUM);
+    $noOfrecords=$row[0];
+    return $noOfrecords;
+}
+
+function printFormSubmit(){
+    echo '<input type="hidden" name="submitted" value="TRUE" />
+    <p><input type="submit" name="submit" value="Submit" /></p>';
+    echo '</form></div>';
+}
 
 ?>
 
