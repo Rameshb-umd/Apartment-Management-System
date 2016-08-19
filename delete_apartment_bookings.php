@@ -40,7 +40,8 @@ $guest_name= "";
 $booking_status= "";
 $start_date= "";
 $end_date= "";
-//Only if Apt id know we can edit the apartment
+
+//Only if Apt booking id know we can edit the apartment booking
 if (isset($_GET['apt_booking_id'])) {	
     $apt_booking_id = $_GET['apt_booking_id'];
     $bookings = getApartmentBookingDetails($dbc,$apt_booking_id);
@@ -50,6 +51,7 @@ if (isset($_GET['apt_booking_id'])) {
     $start_date= $bookings["start_date"];
     $end_date= $bookings["end_date"];
 }
+
 //Populate Value from Form Submit - Stickeness
 if (isset($_POST['apt_booking_id'])) {	
     $apt_booking_id = $_POST['apt_booking_id'];
@@ -61,12 +63,14 @@ if (isset($_POST['apt_booking_id'])) {
     $end_date= $bookings["end_date"];
 }
 
+echo '<div class="container">';
 echo '<h2>Delete apartment booking</h2>
         <h3>Apartment : ' . $apt_num . '</h3>
         <h3>Guest: ' . $guest_name . '</h3>
         <h3>Booking Status: ' . $booking_status. '</h3>
         <h3>Booking Start Date: ' . $start_date. '</h3>
         <h3>Booking End Date: ' . $end_date. '</h3>';	
+
 //Create Form Elements
 if(isset($_GET['apt_booking_id'])){
 	echo '<p>Are you sure you want to delete this Course?<br />
@@ -77,6 +81,7 @@ if(isset($_GET['apt_booking_id'])){
 	<input type="hidden" name="apt_booking_id" value="' . $apt_booking_id . '" /> '; 		
 }
 echo '</form>';
+echo '</div>';
 
 // Performing Business Logic When Submitted
 if (isset($_POST['submitted'])) {

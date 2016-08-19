@@ -49,10 +49,12 @@ if (isset($_POST['apt_id'])) {
     $apt_type_desc=$apartment["apt_type_description"];
 }
 
+echo '<div class="container">';
 echo '<h2>Delete apartment</h2>
         <h3>Apartment Number: ' . $apt_num . '</h3>
         <h3>Building Name: ' . $building_name . '</h3>
         <h3>Apartment Type: ' . $apt_type_desc. '</h3>';	
+
 //Create Form Elements
 if(isset($_GET['apt_id'])){
 	echo '<p>Are you sure you want to delete this Course?<br />
@@ -63,6 +65,7 @@ if(isset($_GET['apt_id'])){
 	<input type="hidden" name="apt_id" value="' . $apt_id . '" /> '; 		
 }
 echo '</form>';
+echo '</div>';
 
 // Performing Business Logic When Submitted
 if (isset($_POST['submitted'])) {

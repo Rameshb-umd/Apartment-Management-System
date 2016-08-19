@@ -57,6 +57,7 @@ $bed_count= "";
 $bath_count= "";
 $room_count= "";
 $apt_id = "";
+
 //Only if Apt id know we can edit the apartment
 if (isset($_GET['apt_id'])) {	
     $apt_id = $_GET['apt_id'];
@@ -68,6 +69,7 @@ if (isset($_GET['apt_id'])) {
     $bath_count=$apartment["bathroom_count"];
     $room_count=$apartment["room_count"];
 }
+
 //Populate Value from Form Submit - Stickeness
 if (isset($_POST['apt_id'])) {	
     $apt_id = $_POST['apt_id'];
@@ -87,10 +89,10 @@ echo '</p>
 <p>Apartment Type: ';
 getAptType($dbc,$apt_type);
  echo '</p>
-<p>Apartment Number: <input type="text" name="apt_number" size="10" maxlength="10" value="'.$apt_num.'" /></p>
-<p>Bedroom Count: <input type="text" name="bedroom_count" size="10" maxlength="10" value="'.$bed_count.'" /></p>
-<p>Bathroom Count: <input type="text" name="bathroom_count" size="10" maxlength="10" value="'.$bath_count.'" /></p>
-<p>Total rooms: <input type="text" name="room_count" size="10" maxlength="10" value="'.$room_count.'" /></p>
+<p>Apartment Number: <input type="text" name="apt_number" size="10" maxlength="10" value="'.$apt_num.'" /><label>(Numeric)</label></p>
+<p>Bedroom Count: <input type="text" name="bedroom_count" size="10" maxlength="10" value="'.$bed_count.'" /><label>(Numeric)</label></p>
+<p>Bathroom Count: <input type="text" name="bathroom_count" size="10" maxlength="10" value="'.$bath_count.'" /><label>(Numeric)</label></p>
+<p>Total rooms: <input type="text" name="room_count" size="10" maxlength="10" value="'.$room_count.'" /><label>(Numeric)</label></p>
 
 <input type="hidden" name="submitted" value="TRUE" />
 <input type="hidden" name="apt_id" value="'. $apt_id.'" />

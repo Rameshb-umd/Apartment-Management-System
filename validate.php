@@ -13,4 +13,14 @@ function checkIfNumeric($value,$message,& $errors){
 	}  
 }
 
+function validateDate($date,$message,& $errors)
+{
+    $d = DateTime::createFromFormat('Y-m-d', $date);
+    if(($d && $d->format('Y-m-d') === $date)){
+        
+    }else{
+        $errors[] = $message;
+    }
+}
+
 ?>

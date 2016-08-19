@@ -105,8 +105,8 @@ getGuest($dbc,$guest_id);
 <p>Booking Status: ';
 getBookingStatus($dbc,$booking_status_code);
  echo '</p>
-<p>Booking Start Date: <input type="text" name="start_date" size="10" maxlength="10" value="'.$start_date.'" /></p>
-<p>Booking End Date: <input type="text" name="end_date" size="10" maxlength="10" value="'.$end_date.'" /></p>
+<p>Booking Start Date: <input type="text" name="start_date" size="10" maxlength="10" value="'.$start_date.'" /><label>(YYYY-MM-DD)</label></p>
+<p>Booking End Date: <input type="text" name="end_date" size="10" maxlength="10" value="'.$end_date.'" /><label>(YYYY-MM-DD)</label></p>
 <input type="hidden" name="submitted" value="TRUE" />
 <input type="hidden" name="apt_booking_id" value="'. $apt_booking_id.'" />
 <p><input type="submit" name="submit" value="Submit" /></p>
@@ -120,6 +120,8 @@ if (isset($_POST['submitted'])) {
     $errors = array(); 
     checkIfEmpty($_POST['start_date'],"Please enter booking start date.",$errors);
     checkIfEmpty($_POST['end_date'],"Please enter booking end date.",$errors);
+    validateDate($_POST['start_date'],"Please enter valid start date.",$errors);
+    validateDate($_POST['end_date'],"Please enter valid end date.",$errors);
      //if no errors in the vlaues selected, updation of the entries
     if (empty($errors)) { // If everything's OK.
         // Make the query.

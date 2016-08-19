@@ -68,10 +68,10 @@ if (isset($_POST['submitted'])) {
     <p>Apartment Type: ';
     getAptType($dbc,$apt_type);
      echo '</p>
-    <p>Apartment Number: <input type="text" name="apt_number" size="10" maxlength="10" value="'.$apt_num.'" /></p>
-    <p>Bedroom Count: <input type="text" name="bedroom_count" size="10" maxlength="10" value="'.$bed_count.'" /></p>
-    <p>Bathroom Count: <input type="text" name="bathroom_count" size="10" maxlength="10" value="'.$bath_count.'" /></p>
-    <p>Total rooms: <input type="text" name="room_count" size="10" maxlength="10" value="'.$room_count.'" /></p>';
+    <p>Apartment Number: <input type="text" name="apt_number" size="10" maxlength="2" value="'.$apt_num.'" /><label>(Numeric)</label></p>
+    <p>Bedroom Count: <input type="text" name="bedroom_count" size="10" maxlength="2" value="'.$bed_count.'" /><label>(Numeric)</label></p>
+    <p>Bathroom Count: <input type="text" name="bathroom_count" size="10" maxlength="2" value="'.$bath_count.'" /><label>(Numeric)</label></p>
+    <p>Total rooms: <input type="text" name="room_count" size="10" maxlength="2" value="'.$room_count.'" /><label>(Numeric)</label></p>';
 
 if(!isset($_POST['submitted'])){
     
@@ -80,7 +80,6 @@ if(!isset($_POST['submitted'])){
 
 //Validate and Submit to the Database
 if (isset($_POST['submitted'])) {
-    
     
     $errors = array(); 
     checkIfEmpty($_POST['building_id'],"Please Select a building.",$errors);
@@ -101,16 +100,15 @@ if (isset($_POST['submitted'])) {
     }
     echo '<div class="Message_bar">';
     //if no errors in the vlaues selected, updation of the entries
-    if (empty($errors)) { // If everything's OK.
-        // Make the query.
+    if (empty($errors)) { 
         $apt_id = getApartmentId($dbc)+1;
         $query = "INSERT INTO Apartments VALUES ($apt_id,$building_id,$apt_type,'$apt_num','$bath_count','$bed_count','$room_count')";
-        addTable($dbc,$query);
-    }else {  // Report the errors.
+        addTable($dbc,$query);//add record
+    }else {  
         echo '<div class="error"><p class="error">The following error(s) occurred:<br/><ul>';
-		foreach ($errors as $msg) { // Print each error.
+		foreach ($errors as $msg) { 
 			echo "<li>$msg</li>";
-		} // End of foreach
+		} 
 		echo '</ul></p><p>Please try again.</p>';
     }
     echo '</div>';

@@ -45,10 +45,10 @@ echo '<div class="container">';
 echo '<h2>Edit Guest Detail</h2>' ;   
 
 echo '  
-<p>First Name: <input type="text" name="guest_first_name" size="10" maxlength="10" value="'.$guest_first_name.'" /></p>
-<p>Last Name: <input type="text" name="guest_last_name" size="10" maxlength="10" value="'.$guest_last_name.'" /></p>
-<p>Date of Birth: <input type="text" name="guest_date_of_birth" size="10" maxlength="10" value="'.$guest_date_of_birth.'" /></p>
-<p>Gender: <input type="text" name="guest_gender" size="10" maxlength="1" value="'.$guest_gender.'" /></p>
+<p>First Name: <input type="text" name="guest_first_name" size="10" maxlength="50" value="'.$guest_first_name.'" class="textbox"/></p>
+<p>Last Name: <input type="text" name="guest_last_name" size="10" maxlength="50" value="'.$guest_last_name.'" class="textbox"/></p>
+<p>Date of Birth: <input type="text" name="guest_date_of_birth" size="10" maxlength="10" value="'.$guest_date_of_birth.'" class="textbox"/>(YYYY-MM-DD)</p>
+<p>Gender: <input type="text" name="guest_gender" size="10" maxlength="1" value="'.$guest_gender.'" class="textbox"/><label>(M/F)</label></p>
 
 <input type="hidden" name="submitted" value="TRUE" />
 <input type="hidden" name="guest_id" value="'. $guest_id.'" />
@@ -65,6 +65,8 @@ if (isset($_POST['submitted'])) {
     checkIfEmpty($_POST['guest_last_name'],"Please enter last name.",$errors);
     checkIfEmpty($_POST['guest_date_of_birth'],"Please enter date of birth.",$errors);
     checkIfEmpty($_POST['guest_gender'],"Please enter gender.",$errors);
+    validateDate($_POST['guest_date_of_birth'],"Please enter valid date of birth.",$errors);
+
      //if no errors in the vlaues selected, updation of the entries
     if (empty($errors)) { // If everything's OK.
         // Make the query.

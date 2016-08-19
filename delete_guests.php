@@ -24,6 +24,7 @@ $guest_first_name= "";
 $guest_last_name= "";
 $guest_date_of_birth= "";
 $guest_gender="";
+
 //Only if Apt id know we can edit the apartment
 if (isset($_GET['guest_id'])) {	
     $guest_id = $_GET['guest_id'];
@@ -33,6 +34,7 @@ if (isset($_GET['guest_id'])) {
     $guest_date_of_birth= $guests["guest_date_of_birth"];
     $guest_gender= $guests["guest_gender"];
 }
+
 //Populate Value from Form Submit - Stickeness
 if (isset($_POST['guest_id'])) {	
     $guest_id = $_POST['guest_id'];$guests = getGuestDetails($dbc,$guest_id);
@@ -41,11 +43,14 @@ if (isset($_POST['guest_id'])) {
     $guest_date_of_birth= $guests["guest_date_of_birth"];
     $guest_gender= $guests["guest_gender"];
 }
+
+echo '<div class="container">';
 echo '<h2>Delete Guests</h2>
         <h3>First Name : ' . $guest_first_name . '</h3>
         <h3>Last Name: ' . $guest_last_name . '</h3>
         <h3>Date of birth: ' . $guest_date_of_birth. '</h3>
         <h3>Gender: ' . $guest_gender. '</h3>';	
+
 //Create Form Elements
 if(isset($_GET['guest_id'])){
 	echo '<p>Are you sure you want to delete this Course?<br />
@@ -56,6 +61,7 @@ if(isset($_GET['guest_id'])){
 	<input type="hidden" name="guest_id" value="' . $guest_id . '" /> '; 		
 }
 echo '</form>';
+echo '</div>';
 
 // Performing Business Logic When Submitted
 if (isset($_POST['submitted'])) {

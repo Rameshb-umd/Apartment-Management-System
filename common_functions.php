@@ -106,6 +106,7 @@ function checkApartmentBooked($dbc,$apt_id){
     }
 }
 
+//get max apartment id
 function getApartmentId($dbc){
     $query = "select max(apt_id) from apartments";
     $result = @mysqli_query ($dbc, $query); // Run the query.
@@ -114,6 +115,7 @@ function getApartmentId($dbc){
     return $noOfrecords;
 }
 
+//print submit button
 function printFormSubmit(){
     echo '<input type="hidden" name="submitted" value="TRUE" />
     <p><input type="submit" name="submit" value="Submit" /></p>';

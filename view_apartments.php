@@ -103,7 +103,7 @@ if (isset($_GET['orderby'])) {
 echo '<div class="container">';
 echo '<div style="width:80%">';
 //Page Header
-echo '<h1>List of Apartments under Management</h1>';
+echo '<h1>List of Apartments </h1>';
 //Pagination Top
 pagination($pages,$start,$display,'view_apartments.php',$sortby,$orderby);
 echo '<table>';
