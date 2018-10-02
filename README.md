@@ -31,7 +31,7 @@ availability directly through the application. The guest would be able to manage
 information such as Name, Contact Number, Contact Email Id.
 
 ### SCHEMA
-LIST OF TABLES AND THEIR FIELDS:
+LIST OF TABLES AND THEIR FIELDS BELOW:
 Below are the list of database tables and their fields that will be used for this website.
 ```
 Apartment_Buildings:
